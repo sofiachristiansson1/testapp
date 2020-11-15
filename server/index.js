@@ -56,15 +56,6 @@ db.run('INSERT INTO employees (id,name) VALUES(?,?)',
 ["10", "sofia"]);
 
 
-db.all('SELECT * FROM sales', [], (err, rows) => {
-  if (err) {
-    throw err;
-  }
-  rows.forEach((row) => {
-    console.log(row);
-  });
-});
-
 });
 app.get("/employees", (req, res) => {
   db.all("SELECT * FROM employees", [], (err, rows) => {
@@ -138,7 +129,7 @@ app.delete("/carmodels/:id", (req, res) => {
 app.post("/users/", (req, res) => {
   var reqBody = req.body;
       db.run('INSERT INTO users (id, email, user_name, password) VALUES (?,?,?,?)',
-      [reqBody.id, reqBody.email, reqBody.username, reqBody.password],
+      [reqBody.id, reqBody.email, reqBody.user_name, reqBody.password],
       function (err) {
           if (err) {
               return res.status(400).json({ "error": err.message })
@@ -159,14 +150,23 @@ app.get("/users/:user_name", (req, res) => {
       res.status(200).json(rows);
     });
 });
+app.get("/users", (req, res) => {
+  db.all("SELECT * FROM users", [], (err, rows) => {
+      if (err) {
+        res.status(400).json({"error":err.message});
+        return;
+      }
+      res.status(200).json(rows);
+    });
+});
 
 app.post("/users/login", (req, res) => {
   var reqBody = req.body;
       db.run('SELECT id FROM users WHERE user_name =? AND password=?',
       [reqBody.user_name, reqBody.password],
       function (err) {
-          if (err) {
-              return res.status(400).json({ "error": err.message })
+          if (err)  {
+              return res.status(400).json({ "error": "SOmething went w" })
               
           }
           return res.status(201).json(

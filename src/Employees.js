@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import "./Employees.css";
+
 
 
 class Employees extends Component{
     constructor(props){
         super(props);
-        this.state ={employees: ""};
+        this.state ={employees: "",
+    users:"",};
         this.onClick=this.onClick.bind(this);
+        
     }
 
   
@@ -26,9 +28,11 @@ class Employees extends Component{
             <div class="bg-text">
                 
                 <button class="btn btn-light" onClick={this.onClick}>View all employees</button>
+                
   
                 
                 <p>{this.state.employees}</p>
+                <p>{this.state.users}</p>
                 
           </div>
         </div>
